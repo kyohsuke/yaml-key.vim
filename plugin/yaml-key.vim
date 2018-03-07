@@ -12,6 +12,10 @@ if exists('g:loaded_yaml_key')
 endif
 let g:loaded_yaml_key = 1
 
+if !exists("g:yamlkey_and_yank") || !g:yamlkey_and_yank
+  let g:yamlkey_and_yank = 1
+endif
+
 let s:save_cpo = &cpo
 set cpo&vim
 
@@ -53,6 +57,9 @@ endfunction
 
 function! s:ShowYamlKey()
   let result = s:FetchYamlKey()
+  if g:yamlkey_and_yank
+    let @+ = result
+  endif
   echo result
 endfunction
 
