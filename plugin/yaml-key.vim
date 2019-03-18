@@ -12,6 +12,14 @@ if exists('g:loaded_yaml_key')
 endif
 let g:loaded_yaml_key = 1
 
+if !exists("g:yamlkey_separator") || !g:yamlkey_separator
+  let g:yamlkey_separator = '.'
+endif
+
+if !exists("g:yamlkey_first_symbol") || !g:yamlkey_first_symbol
+  let g:yamlkey_first_symbol = '.'
+endif
+
 if !exists("g:yamlkey_and_yank") || !g:yamlkey_and_yank
   let g:yamlkey_and_yank = 1
 endif
@@ -22,12 +30,13 @@ set cpo&vim
 function! s:FetchYamlKey()
     let ft = &filetype
     let result = ''
-python << EOF
-import vim
+python3 << EOF
 import re
 
 def execute():
     file_type = vim.eval("l:ft")
+    first_symbol = vim.eval("g:yamlkey_first_symbol")
+    separator = vim.eval("g:yamlkey_separator")
     if file_type != 'yaml':
         return
 
@@ -48,7 +57,7 @@ def execute():
         if indent == 0:
             break
 
-    result_key = '.{}'.format('.'.join(reversed(keys))) if 0 < len(keys) else ''
+    result_key = '{}{}'.format(first_symbol, separator.join(reversed(keys))) if 0 < len(keys) else ''
     vim.command("let result='{}'".format(result_key))
 execute()
 EOF
