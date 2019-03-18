@@ -10,8 +10,8 @@
 ## configs
 
 * g:yamlkey_and_yank : default 1  
-  detected yaml key set to yank buffer.  
-  if it set to 0, yaml key not to set yank buffer
+  the detected yaml key sets to yank buffer.  
+  if it sets to 0, the key does not set to yank buffer
 
 * g:yamlkey_first_symbol : default '.'  
   yaml key first symbol
